@@ -27,19 +27,19 @@ pip install -r requirements.txt
 Basic command:  
 
 ```bash
-python3 pdfedit.py input.pdf 2,4,5 --output newfile
+python3 pdfedit.py input.pdf 2,4,5 newfile
 ```
 
 ### **Arguments:**  
 - `input.pdf` → The PDF file to edit  
 - `2,4,5` → Comma-separated page numbers to remove (1-based index)  
-- `--output newfile` → Optional. Output file name **without extension** (default: `output.pdf`)  
+- `newfile` → Optional. Output file name **without extension** (default: `output.pdf`)  
 
 ### **Examples:**  
 
 #### **Remove pages 2 and 4 from `document.pdf` and save as `edited.pdf`**  
 ```bash
-python3 pdfedit.py document.pdf 2,4 --output edited
+python3 pdfedit.py document.pdf 2,4 edited
 ```
 
 #### **Remove a single page (e.g., page 3)**  
@@ -49,7 +49,7 @@ python3 pdfedit.py document.pdf 3
 
 #### **Remove pages 1, 5, and 10, save as `cleaned.pdf`**  
 ```bash
-python3 pdfedit.py document.pdf 1,5,10 --output cleaned
+python3 pdfedit.py document.pdf 1,5,10 cleaned
 ```
 
 ---
