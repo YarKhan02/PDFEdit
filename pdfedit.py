@@ -23,16 +23,19 @@ def remove_page(file_name, pages_to_remove, output_file):
     doc.save(output_file)
     print(f"Success! Saved as: {output_file}")
 
+def main():
+    """Handles command-line arguments and runs the remove_page function."""
+    
+    parser = argparse.ArgumentParser(description="Remove specific pages from a PDF file.")
+    parser.add_argument("input", help="Path to the input PDF file")
+    parser.add_argument("pages", help="Comma-separated page numbers to remove (e.g., 1,2,3)")
+    parser.add_argument("output", nargs="?", default="output.pdf", help="Name of the output PDF file (optional)")
 
-if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print("Usage: python3 script.py <input.pdf> <pages_to_remove> [output_filename]")
-        print("Example: python3 script.py file.pdf 1,2,3 external")
-        sys.exit(1)
+    args = parser.parse_args()
 
-    file_name = sys.argv[1]
+    # Convert page numbers to a list of integers
     try:
-        pages_to_remove = list(map(int, sys.argv[2].split(",")))
+        pages_to_remove = sorted(list(map(int, args.pages.split(","))), reverse=True)
         if any(p <= 0 for p in pages_to_remove):
             print("Error: Page numbers must be positive integers!")
             sys.exit(1)
@@ -40,9 +43,14 @@ if __name__ == '__main__':
         print("Error: Page numbers must be integers separated by commas! e.g -> (1,2,3)")
         sys.exit(1)
 
-    if '.' in sys.argv[3]:
-        print('Error: File should not contain extension')
+    if "." in args.output and not args.output.endswith(".pdf"):
+        print("Error: Output file should have a '.pdf' extension.")
         sys.exit(1)
 
-    output_file = sys.argv[3] + '.pdf' if len(sys.argv) > 3 else "output.pdf"
-    remove_page(file_name, pages_to_remove[::-1], output_file)
+    output_file = args.output if args.output.endswith(".pdf") else args.output + ".pdf"
+
+    remove_page(args.input, pages_to_remove, output_file)
+
+
+if __name__ == '__main__':
+    main()
